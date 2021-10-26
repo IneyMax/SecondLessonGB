@@ -21,63 +21,48 @@ union my_data
     char sign;
 };
 
-struct is_int
-{
-    unsigned int flag: 1;
-};
-
-struct is_float
-{
-    unsigned int flag: 1;
-};
-
-struct is_char
-{
-    unsigned int flag: 1;
-};
-
 struct my_variant
 {
     my_data main_data;
-    is_int integer;
-    is_float floating;
-    is_char c_сharacter;
+    int is_int: 1;
+    int is_float : 1;
+    int is_char : 1;
     
     void set(float f)
     {
         main_data.f_number = f;
-        floating.flag = 1;
-        integer.flag = 0;
-        c_сharacter.flag = 0;
+        is_float = 1;
+        is_int = 0;
+        is_char = 0;
     }
 
     void set(int i)
     {
         main_data.number = i;
-        floating.flag = 0;
-        integer.flag = 1;
-        c_сharacter.flag = 0;
+        is_float = 0;
+        is_int = 1;
+        is_char = 0;
     }
 
     void set(char ch)
     {
         main_data.sign = ch;
-        floating.flag = 0;
-        integer.flag = 0;
-        c_сharacter.flag = 1;
+        is_float = 0;
+        is_int = 0;
+        is_char = 1;
     }
 
     void print_value()
     {
-        if (integer.flag)
+        if (is_int)
         {
             std::cout << main_data.number << "\n";
         }
-        if (floating.flag)
+        if (is_float)
         {
             std::cout << main_data.f_number << "\n";
         }
-        if (c_сharacter.flag)
+        if (is_char)
         {
             std::cout << main_data.sign << "\n";
         }
